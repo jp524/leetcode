@@ -5,8 +5,11 @@ def group_anagrams(strs)
 
   hash = Hash.new { |h, k| h[k] = [] }
   strs.each do |str|
-    sorted_str = str.chars.sort.join
-    hash[sorted_str] << str
+    count = Array.new(26, 0)
+    str.each_byte do |c|
+      count[c - "a".ord] += 1
+    end
+    hash[count] << str
   end
 
   hash.values
