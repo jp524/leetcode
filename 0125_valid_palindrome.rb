@@ -1,23 +1,30 @@
 # @param {String} s
 # @return {Boolean}
 def is_palindrome(s)
-  forward = ""
-  backward = ""
   i = 0
   j = s.length - 1
 
-  until i == s.length
-    f_char = s[i].downcase
-    f_ascii = f_char.ord
-    forward << f_char if f_ascii.between?(97, 122) || f_ascii.between?(48, 57)
-    b_char = s[j].downcase
-    b_ascii = b_char.ord
-    backward << b_char if b_ascii.between?(97, 122) || b_ascii.between?(48, 57)
+  while i < j
+    while i < j && !alphanumeric?(s[i])
+      i += 1
+    end
+
+    while j > i && !alphanumeric?(s[j])
+      j -= 1
+    end
+    
+    return false if s[i].downcase != s[j].downcase
 
     i += 1
     j -= 1
   end
-  forward == backward
+
+  true
+end
+
+def alphanumeric?(char)
+  ascii = char.ord
+  ascii.between?(48, 57) || ascii.between?(65, 90) || ascii.between?(97, 122)
 end
 
 p is_palindrome("A man, a plan, a canal: Panama") # true
