@@ -11,23 +11,27 @@ def three_sum(nums)
   nums.sort!
 
   nums.each_with_index do |x, i|
-    remaining_nums = nums.map(&:clone)
-    remaining_nums.delete_at(i)
-    l = 0
-    r = remaining_nums.length - 1
+    next if i > 0 && x == nums[i - 1]
+    
+    l = i + 1
+    r = nums.length - 1
 
     while l < r
-      y = remaining_nums[l]
-      z = remaining_nums[r]
+      y = nums[l]
+      z = nums[r]
       sum = x + y + z
-      array = [x, y, z].sort!
 
-      result << array if sum == 0 && !result.include?(array)
-
-      sum > 0 ? r -= 1 : l += 1
+      if sum > 0
+        r -= 1
+      elsif sum <0
+        l += 1
+      else
+        result << [x, y, z]
+        l += 1
+        l += 1 while nums[l] == nums[l - 1]
+      end
     end
   end
-
   result
 end
 
@@ -35,5 +39,3 @@ p three_sum([-1, 0, 1, 2, -1, -4]) # [[-1,-1,2],[-1,0,1]]
 p three_sum([0, 1, 1]) # []
 p three_sum([0, 0, 0]) # [[0,0,0]]
 p three_sum([-1, 0, 1]) # [[-1,0,1]]
-
-# Valid but times out on LeetCode
