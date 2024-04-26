@@ -2,19 +2,22 @@
 # @return {Integer}
 def trap(height)
   water = 0
-  current_trap = 0
   l = 0
   r = height.length - 1
+  l_trap = height.first
+  r_trap = height.last
 
   while l < r
-    l_trap = height[l]
-    r_trap = height[r]
-    current_trap = [[l_trap, r_trap].min, current_trap].max
-
-    water += current_trap - l_trap if l_trap < current_trap
-    water += current_trap - r_trap if r_trap < current_trap
-
-    l_trap > r_trap ? r -= 1 : l += 1
+    if l_trap > r_trap # Only need to compare to one side
+      r -= 1
+      add_water = r_trap - height[r]
+      r_trap = [height[r], r_trap].max
+    else
+      l += 1
+      add_water = l_trap - height[l]
+      l_trap = [height[l], l_trap].max
+    end
+    water += add_water if add_water.positive?
   end
 
   water
