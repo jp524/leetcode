@@ -1,19 +1,13 @@
 # @param {Integer[]} prices
 # @return {Integer}
 def max_profit(prices)
-  l = 0
-  r = 1
+  buy = prices.first
   max_profit = 0
 
-  while r < prices.length
-    l_price = prices[l]
-    r_price = prices[r]
-    if l_price < r_price
-      max_profit = [max_profit, r_price - l_price].max
-    else
-      l = r
-    end
-    r += 1
+  prices.each do |price|
+    buy = [buy, price].min
+    profit = price - buy
+    max_profit = [max_profit, profit].max
   end
   max_profit
 end
