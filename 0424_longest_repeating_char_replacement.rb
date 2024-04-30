@@ -9,17 +9,13 @@ def character_replacement(s, k)
   (0...s.length).each do |r|
     char_hash[s[r]] += 1
     most_common_char = char_hash.sort_by { |k, v| -v }.first.first
-    other_char_count = char_hash.reduce(0) do |sum, (char, count)|
-      sum + (char == most_common_char ? 0 : count)
-    end
+    other_char_count = (r - l + 1) - char_hash[most_common_char]
 
     if other_char_count > k
       char_hash[s[l]] -= 1
       l += 1
       most_common_char = char_hash.sort_by { |k, v| -v }.first.first
-      other_char_count = char_hash.reduce(0) do |sum, (char, count)|
-        sum + (char == most_common_char ? 0 : count)
-      end
+      other_char_count = (r - l + 1) - char_hash[most_common_char]
     end
 
     longest_substring = [longest_substring, char_hash.values.sum].max
