@@ -8,9 +8,9 @@ def eval_rpn(tokens)
 
   tokens.each do |char|
     if OPERATORS.include?(char)
-      result = math(stack[-2], stack[-1], char)
-      stack.pop
-      stack.pop
+      a = stack.pop
+      b = stack.pop
+      result = math(b, a, char)
       stack << result
     else
       stack << char.to_i
@@ -31,14 +31,7 @@ def math(a, b, operator)
   when "*"
     a * b
   when "/"
-    result = a / b.to_f
-    if result > 1
-      result.floor
-    elsif result < -1
-      result.ceil
-    else
-      0
-    end
+    (a / b.to_f).to_i
   end
 end
 
