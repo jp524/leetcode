@@ -5,20 +5,38 @@
 # @param {Integer} target
 # @return {Boolean}
 def search_matrix(matrix, target)
-  nums = matrix.flatten
+  l = 0
+  r = matrix.length - 1
+
+  while l <= r
+    m = l + (r - l) / 2
+    nums = matrix[m]
+
+    if target < nums[0]
+      r = m - 1
+    elsif target > nums[-1]
+      l = m + 1
+    else
+      return binary_search(nums, target)
+    end
+  end
+
+  false
+end
+
+def binary_search(nums, target)
   l = 0
   r = nums.length - 1
 
   while l <= r
-    middle_index = l + (r - l) / 2
-    middle = nums[middle_index]
+    m = l + (r - l) / 2
+    num = nums[m]
+    return true if target == num
 
-    return true if target == middle
-
-    if target < middle
-      r = middle_index - 1
+    if target < num
+      r = m - 1
     else
-      l = middle_index + 1
+      l = m + 1
     end
   end
 
@@ -27,3 +45,5 @@ end
 
 p search_matrix([[1,3,5,7],[10,11,16,20],[23,30,34,60]], 3) # true
 p search_matrix([[1,3,5,7],[10,11,16,20],[23,30,34,60]], 13) # false
+p search_matrix([[1,3]], 3) # true
+p search_matrix([[1],[3]], 3) # true
