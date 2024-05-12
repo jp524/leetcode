@@ -13,31 +13,25 @@
 # @param {ListNode} list2
 # @return {ListNode}
 def merge_two_lists(list1, list2)
-  curr1 = list1
-  curr2 = list2
-  result = []
-  
-  while curr1 && curr2
-    if curr1.val <= curr2.val
-      result << curr1.val
-      curr1 = curr1.next
+  dummy = ListNode.new
+  head = dummy
+
+  while list1 && list2
+    if list1.val <= list2.val
+      dummy.next = list1
+      list1 = list1.next
     else
-      result << curr2.val
-      curr2 = curr2.next
+      dummy.next = list2
+      list2 = list2.next
     end
+    dummy = dummy.next
   end
 
-  while curr1
-    result << curr1.val
-    curr1 = curr1.next
+  if list1
+    dummy.next = list1
+  elsif list2
+    dummy.next = list2
   end
 
-  while curr2
-    result << curr2.val
-    curr2 = curr2.next
-  end
-
-  result
+  head.next
 end
-
-# This returns the merged list values, not the head of the merged linked list
