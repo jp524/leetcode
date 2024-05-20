@@ -13,18 +13,16 @@
 # @param {TreeNode} root
 # @return {TreeNode}
 def invert_tree(root)
-  return root if root.nil?
+  return nil if root.nil?
 
-  queue = [root]
+  # Swap children
+  old_left = root.left
+  root.left = root.right
+  root.right = old_left
 
-  until queue.empty?
-    current = queue.shift
-    old_left = current.left
-    current.left = current.right
-    current.right = old_left
-    queue << current.left if current.left
-    queue << current.right if current.right
-  end
+  # Invert subtrees
+  invert_tree(root.left)
+  invert_tree(root.right)
 
   root
 end
