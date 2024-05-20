@@ -13,19 +13,17 @@
 # @param {TreeNode} root
 # @return {Integer}
 def max_depth(root)
-  return 0 if root.nil?
+  depth_max = 0
+  stack = [[root, 1]]
 
-  current_level = 0
-  queue = [root]
-
-  until queue.empty?
-    queue.length.times do 
-      current_node = queue.shift
-      queue << current_node.left if current_node.left
-      queue << current_node.right if current_node.right
+  until stack.empty?
+    node, depth = stack.pop
+    if node
+      depth_max = [depth_max, depth].max
+      stack << [node.left, depth + 1] if node.left
+      stack << [node.right, depth + 1] if node.right
     end
-    current_level += 1
   end
 
-  current_level
+  depth_max
 end
