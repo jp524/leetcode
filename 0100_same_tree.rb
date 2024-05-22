@@ -13,6 +13,8 @@
 # @param {TreeNode} p
 # @param {TreeNode} q
 # @return {Boolean}
+
+# Iterative breadth-first search
 def is_same_tree(p, q)
   queue_p = [p]
   queue_q = [q]
@@ -34,4 +36,13 @@ def is_same_tree(p, q)
   end
 
   queue_p == queue_q
+end
+
+# Recursive depth-first search
+def is_same_tree(p, q)
+  return true if p.nil? && q.nil?
+
+  return false if p.nil? || q.nil? || p.val != q.val
+
+  is_same_tree(p.left, q.left) && is_same_tree(p.right, q.right)
 end
