@@ -16,18 +16,20 @@ def level_order(root)
   return [] if root.nil?
 
   queue = [root]
-  result = Hash.new { |h, k| h[k] = []}
-  current_level = 0
+  result = []
 
   until queue.empty?
+    level = []
     queue.length.times do
       node = queue.shift
-      result[current_level] << node.val
-      queue << node.left if node.left
-      queue << node.right if node.right
+      if node
+        level << node.val
+        queue << node.left if node.left
+        queue << node.right if node.right
+      end
     end
-    current_level += 1
+    result << level if level
   end
 
-  result.values
+  result
 end
